@@ -10,16 +10,12 @@ let humiture = SHT3x(i2c)
 let accelerometer = LIS3DH(i2c)
 
 while true {
-    let temp = humiture.readCelsius()
-    let humidity = humiture.readHumidity()
-    print("I2C - Temperature: \(temp)C")
-    print("I2C - Humidity: \(humidity)%")
-    let accelerations = accelerometer.readXYZ()
-    print("I2C - x: \(accelerations.x)g")
-    print("I2C - y: \(accelerations.y)g")
-    print("I2C - z: \(accelerations.z)g")
-    print("\n")
-    print("Sleeping for 1s...")
+    i2cMutex.lock()
+    tempC = humiture.readCelsius()
+    humidity = humiture.readHumidity()
+    accel = accelerometer.readXYZ()
+    i2cMutex.unlock()
+    
     sleep(ms: 1000)
 }
     
