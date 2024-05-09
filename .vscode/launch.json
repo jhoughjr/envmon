@@ -1,0 +1,28 @@
+{
+    "configurations": [
+        {
+            "type": "lldb",
+            "request": "launch",
+            "sourceLanguages": [
+                "swift"
+            ],
+            "args": [],
+            "cwd": "${workspaceFolder:envmon}",
+            "name": "Debug envmon",
+            "program": "${workspaceFolder:envmon}/.build/debug/envmon",
+            "preLaunchTask": "swift: Build Debug envmon"
+        },
+        {
+            "type": "lldb",
+            "request": "launch",
+            "sourceLanguages": [
+                "swift"
+            ],
+            "args": [],
+            "cwd": "${workspaceFolder:envmon}",
+            "name": "Release envmon",
+            "program": "${workspaceFolder:envmon}/.build/release/envmon",
+            "preLaunchTask": "swift: Build Release envmon"
+        }
+    ]
+}
