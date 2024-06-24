@@ -14,6 +14,7 @@ let espMutex: Mutex = Mutex()
 let i2cMutex: Mutex = Mutex()
 
 sleep(ms: 1000)
+
 print("main thread - Spawning CO2 sensor thread.")
 createThread(name: "co2_uart",
              priority: 3,

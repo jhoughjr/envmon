@@ -2,7 +2,8 @@ import SwiftIO
 import MadBoard
 import ESP32ATClient
 
-let esp_sleep:Int = 3_000
+let esp_sleep:Int = 30_000
+let url = "http://192.168.1.243:8080/envdata"
 
 func espThread(_ a: UnsafeMutableRawPointer?, _ b: UnsafeMutableRawPointer?, _ c: UnsafeMutableRawPointer?) -> () {
 
@@ -32,11 +33,35 @@ while !connected {
         espMutex.lock()
         connected = true
         espMutex.unlock()
-    } catch {
+    } 
+    catch {
         print("Error: \(error)")
         espMutex.lock()
         connected = false
         espMutex.unlock()
     }
+}
+
+while true {
+    print("sending to \(url)")
+espMutex.lock()
+var t = tempC * 10
+t.round(.toNearestOrAwayFromZero)
+let value = t / 10.0
+let d = 
+"""
+{"tempC":\(value),
+ "hum" : \(Int(humidity)),
+ "ppm" : \(ppm),
+ "accel" : {"x" : \(accel.x), "y" : \(accel.y), "z" : \(accel.z)}
+"""
+espMutex.unlock()
+do {
+    try esp.httpPost(url: url, data: d, headers: ["Content-Type : application/json" ])
+}
+catch {
+    print("esp error: \(error)")
+}
+sleep(ms: esp_sleep)
 }
 }

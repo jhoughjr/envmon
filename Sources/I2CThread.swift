@@ -14,6 +14,7 @@ while true {
     tempC = humiture.readCelsius()
     humidity = humiture.readHumidity()
     accel = accelerometer.readXYZ()
+    
     i2cMutex.unlock()
     
     sleep(ms: 1000)
