@@ -1,7 +1,6 @@
 import SwiftIO
 import MadBoard
 
-// Setup
 var connected = false
 
 var tempC: Float = .nan
@@ -15,20 +14,18 @@ let i2cMutex: Mutex = Mutex()
 
 sleep(ms: 1000)
 
-print("main thread - Spawning CO2 sensor thread.")
-createThread(name: "co2_uart",
-             priority: 3,
-             stackSize: 1024 * 64,
-             co2Thread)
-sleep(ms: 10)
-print("main thread - spawned.")
-
-
 print("main thread - Spawning ESP WIFI thread.")
 createThread(name: "esp",
              priority: 2,
              stackSize: 1024 * 64,
              espThread)
+sleep(ms: 10)
+
+print("main thread - Spawning CO2 sensor thread.")
+createThread(name: "co2_uart",
+             priority: 3,
+             stackSize: 1024 * 64,
+             co2Thread)
 sleep(ms: 10)
 print("main thread - spawned.")
 
@@ -42,7 +39,6 @@ print("main thread - spawned.")
 
 // loop
 while true {
-    print("main thread - snoozing for 10 s zzzzz")
     print("temp \(tempC)")
     print("RH \(humidity)")
     print("CO2ppm \(ppm)")
